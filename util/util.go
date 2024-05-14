@@ -3,6 +3,8 @@ package util
 import (
 	"strconv"
 
+	models "github.com/jany/blog/model"
+	"github.com/jany/blog/protos/blog"
 	"github.com/sirupsen/logrus"
 )
 
@@ -19,4 +21,16 @@ func StringTOI(s string) (int, error) {
 		return 0, err
 	}
 	return id, nil
+}
+
+func ConvertToResource(p *blog.Post) models.Post {
+	post := models.Post{
+		ID:              p.PostId,
+		Title:           p.Title,
+		Author:          p.Author,
+		Content:         p.Content,
+		PublicationData: p.PublicationData,
+		Tags:            p.Tags,
+	}
+	return post
 }

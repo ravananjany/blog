@@ -20,7 +20,7 @@ func Startserver() {
 
 	blog.RegisterBlogServiceServer(ser, NewBlogServer(log))
 	reflection.Register(ser)
-	log.Info("starting server")
+	log.Info("starting  grpc server")
 	if err := ser.Serve(listener); err != nil {
 		log.Error(err)
 		log.Errorf("unable to start the server %s", conf.Grpcport)

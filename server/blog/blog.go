@@ -21,6 +21,7 @@ type server struct {
 func NewBlogServer(l *logrus.Logger) *server {
 	return &server{
 		BlogPost: make(map[string]*blog.Post),
+		logger:   l,
 	}
 }
 
@@ -30,11 +31,6 @@ func (s *server) CreateBlogPost(ctx context.Context, post *blog.Post) (*blog.Pos
 
 	s.mu.Lock()
 	defer s.mu.Unlock()
-
-	if out, ok := s.BlogPost[post.PostId]; ok {
-		util.WithFields("server", "blog").Error(constants.ErrAlreadyExits.Error())
-		return out, constants.ErrAlreadyExits
-	}
 
 	post.PostId = uuid.New().String()
 	s.BlogPost[post.PostId] = post

@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jany/blog/client/service"
 	"github.com/jany/blog/config"
@@ -15,13 +17,13 @@ func StartRest(port string) {
 	router.DELETE("/blog/:id", deletePost)
 	router.PUT("/blog", updatePost)
 	router.GET("/blog/:id", readPost)
-	router.Run(port)
+	router.Run(fmt.Sprintf("localhost:%s", port))
 }
 func StartClient() {
 	log, conf := config.LoadConfig()
 	logger = log
 	log.Info("connecting client")
-	conn, err := grpc.Dial(conf.Grpcport, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial(fmt.Sprintf("localhost:%s", conf.Grpcport), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal("error connecting to server", err)
 	}

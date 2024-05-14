@@ -51,7 +51,7 @@ func (b *blogPost) CreateBlogPost(ctx context.Context, input models.Post) (model
 	input.ID = res.PostId
 	b.logger.Info(fmt.Sprintf("response from the server: %v\n", res))
 	b.logger.Info("exit  " + funcDesc)
-	return input, nil
+	return util.ConvertToResource(res), nil
 }
 
 func (b *blogPost) ReadBlogPost(ctx context.Context, id string) (models.Post, error) {

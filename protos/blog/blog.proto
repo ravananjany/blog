@@ -12,6 +12,13 @@ message Post{
     string publication_data = 5;
     repeated string tags = 6;
 }
+message Datas{
+       repeated Post Posts = 1;
+}
+
+message Readall{
+
+}
 
 message Id{
     string post_id = 1;
@@ -26,4 +33,5 @@ service BlogService{
     rpc ReadBlogPost(Id) returns (Post);
     rpc UpdateBlogPost(Post) returns (Post);
     rpc DeleteBlogPost(Id) returns (DeleteResponse);
+    rpc Read(Readall) returns (Datas);
 }

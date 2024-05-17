@@ -17,6 +17,7 @@ func StartRest(port string) {
 	router.DELETE("/blog/:id", deletePost)
 	router.PUT("/blog", updatePost)
 	router.GET("/blog/:id", readPost)
+	router.GET("/blogs", getall)
 	router.Run(fmt.Sprintf("localhost:%s", port))
 }
 func StartClient() {

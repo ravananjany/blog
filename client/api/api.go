@@ -78,3 +78,13 @@ func deletePost(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"Message": res})
 }
+
+func getall(c *gin.Context) {
+	funcDesc := "getall"
+	logger.Info("enter  " + funcDesc)
+	res, err := blogclient.GetAll(c.Request.Context())
+	if err != nil {
+		c.JSON(http.StatusNotFound, err.Error())
+	}
+	c.JSON(http.StatusOK, gin.H{"Blogs": res})
+}

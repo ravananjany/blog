@@ -94,3 +94,22 @@ func (s *server) DeleteBlogPost(ctx context.Context, id *blog.Id) (*blog.DeleteR
 	delete(s.BlogPost, id.PostId)
 	return &blog.DeleteResponse{Message: "Success"}, nil
 }
+
+func (s *server) ReadAll(ctx context.Context) ([]*blog.Post, error) {
+	var datas []*blog.Post
+	if len(s.BlogPost) > 0 {
+		for _, v := range s.BlogPost {
+			datas = append(datas, v)
+		}
+	}
+	return datas, nil
+}
+
+func (s *server) Read(ctx context.Context, in *blog.Readall) (*blog.Datas, error) {
+	var datas []*blog.Post
+	for _, v := range s.BlogPost {
+		datas = append(datas, v)
+	}
+	data := &blog.Datas{Posts: datas}
+	return data, nil
+}

@@ -17,6 +17,7 @@ type BlogPost interface {
 	ReadBlogPost(ctx context.Context, id string) (models.Post, error)
 	UpdateBlogPost(ctx context.Context, input models.Post) (models.Post, error)
 	DeleteBlogPost(ctx context.Context, id string) (string, error)
+	GetAll(ctx context.Context) ([]models.Post, error)
 }
 
 type blogPost struct {
@@ -122,4 +123,20 @@ func (b *blogPost) DeleteBlogPost(ctx context.Context, id string) (string, error
 	}
 	b.logger.Info(fmt.Sprintf("response from the server: %v\n", res))
 	return res.Message, nil
+}
+
+func (b *blogPost) GetAll(ctx context.Context) ([]models.Post, error) {
+	funcDesc := "DeleteBlogPost"
+	b.logger.Info("enter  " + funcDesc)
+	var datas []models.Post
+	res, err := b.client.Read(ctx, &blog.Readall{})
+	if err != nil {
+		util.WithFields("client", "blog").Error(err)
+		return nil, err
+	}
+	for _, v := range res.Posts {
+		p := util.ConvertToResource(v)
+		datas = append(datas, p)
+	}
+	return datas, nil
 }
